@@ -1,7 +1,7 @@
 provider "aws" {
-  region                      = "ap-southeast-1"
-  access_key                  = "test"
-  secret_key                  = "test"
+  region     = "ap-southeast-1"
+  access_key = "test"
+  secret_key = "test"
 
   # Bypass validasi AWS asli
   skip_credentials_validation = true
