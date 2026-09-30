@@ -17,6 +17,7 @@ resource "aws_instance" "web_server" {
 
   tags = {
     Name = "DevSecOps-Local-EC2"
+    Environment = "Development"
   }
 
 }
