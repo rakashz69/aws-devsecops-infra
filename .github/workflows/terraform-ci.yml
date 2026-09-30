@@ -1,0 +1,36 @@
+name: Terraform CI & Security Check
+
+# Pipeline ini hanya menyala jika ada Pull Request ke branch 'main'
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  infrastructure-check:
+    runs-on: ubuntu-latest # GitHub meminjamkan VM Ubuntu gratis
+
+    steps:
+      # 1. Mengambil kode dari repository Anda ke dalam VM Ubuntu
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Menjalankan Security Scan (Persis seperti yang Anda lakukan di WSL)
+      - name: Run tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0
+        with:
+          soft_fail: false # Set ke 'false' agar pipeline MERAH/GAGAL jika ada isu High/Critical
+
+      # 3. Menyiapkan Terraform di dalam VM Ubuntu
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # 4. Mengecek kerapian kode
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      # 5. Memvalidasi sintaks Terraform (tidak butuh koneksi ke AWS/LocalStack)
+      - name: Terraform Validate
+        run: |
+          terraform init -backend=false
+          terraform validate
