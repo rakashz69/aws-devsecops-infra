@@ -26,6 +26,8 @@ jobs:
       # 3. Menyiapkan Terraform di dalam VM Ubuntu
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+              terraform_wrapper: false
 
       # 4. Mengecek kerapian kode
       - name: Terraform Format Check
@@ -49,6 +51,8 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+              terraform_wrapper: false
 
       - name: Terraform Init & Apply
         run: |
