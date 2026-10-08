@@ -3,3 +3,4 @@
 .terraform/
 *.tfvars
 main.tf.bak
+actions-runner/
